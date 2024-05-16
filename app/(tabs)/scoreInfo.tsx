@@ -17,28 +17,18 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Help/Tips</ThemedText>
+        <ThemedText type="title">Scoring Information</ThemedText>
         
       </ThemedView>
       <ThemedView style={styles.titleContainer}>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Set Location</ThemedText>
-        <ThemedText>Navigate to the location screen to set your location.
+        <ThemedText type="subtitle">Heuristic Goodness Score</ThemedText>
+        <ThemedText>Each day is marked as red, amber or green depending on how good of a day it is to stargaze.
+                    The individual score is based on a mathematical formula that takes temperature, cloud cover and rainfall into consideration.
         </ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Get Forecast</ThemedText>
-        <ThemedText>
-          Head to the forecast screen to see the forecast. Heuristic=
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Navigate through the Days</ThemedText>
-        <ThemedText>
-          Scroll through the days to see the next forecasts.
-        </ThemedText>
-      </ThemedView>
+
       
     </ParallaxScrollView>
     

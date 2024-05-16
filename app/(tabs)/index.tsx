@@ -7,6 +7,12 @@ import { ThemedView } from '@/components/ThemedView';
 
 export default function HomeScreen() {
   return (
+    <Button
+  onPress={() => {
+    console.log('You tapped the button!');
+  }}
+  title="Press Me"
+/>
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
@@ -46,7 +52,9 @@ export default function HomeScreen() {
           <ThemedText type="defaultSemiBold">app-example</ThemedText>.
         </ThemedText>
       </ThemedView>
+      
     </ParallaxScrollView>
+    
   );
 }
 

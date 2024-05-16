@@ -21,12 +21,6 @@ export default function HomeScreen() {
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.titleContainer}>
-      <Button
-  onPress={() => {
-    console.log('You tapped the button!');
-  }}
-  title="Press Me"
-/>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>

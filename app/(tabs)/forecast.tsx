@@ -1,10 +1,23 @@
-import React from 'react';
-import DayWidget from '../daywidget.tsx'
+import { Image, StyleSheet, Platform } from 'react-native';
 
-export default function Forecast() {
+import { HelloWave } from '@/components/HelloWave';
+import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+
+
+
+function MyButton({ title }: { title: string }) {
     return (
-        <View>
-            <DayWidget day="Monday" />
-        </View>
-    )
-}
+      <button>{title}</button>
+    );
+  }
+  
+  export default function MyApp() {
+    return (
+      <div>
+        <h1>Welcome to my app</h1>
+        <MyButton title="I'm a button" />
+      </div>
+    );
+  }

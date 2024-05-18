@@ -33,15 +33,15 @@ export function get_colour(rainfall, cloud_cover_percent, temperature_celsius) {
 // Define the RandomDayQuery class and supporting functions/classes
 class RandomDayQuery {
     queryDay(easting, northing, daysAfterToday) {
-        const hourQueryResults = Array.from({ length: 24 }, (_, x) => new RandomHourQuery().queryHour(easting, northing, x));
+        const hourQueryResults = Array.from({ length: 24 }, (_, x) => new RandomHourQuery().queryHour(easting, northing, x, daysAfterToday));
         return new DayQueryResult(hourQueryResults, new FixedMoonPhaseMetric(daysAfterToday), new FixedSuntimeMetric(daysAfterToday), daysOfWeek[daysAfterToday % 7]);
     }
 }
 
 class RandomHourQuery {
-    queryHour(easting, northing, hoursAfterMidnight) {
-        const noise = this.noise(hoursAfterMidnight / 8, easting + northing);
-        const noise2 = this.noise(hoursAfterMidnight, easting + northing) - 0.5;
+    queryHour(easting, northing, hoursAfterMidnight, day) {
+        const noise = this.noise(hoursAfterMidnight / 8 + day * 3, easting + northing);
+        const noise2 = this.noise(hoursAfterMidnight + day * 24, easting + northing) - 0.5;
         const seed = Math.round(1 + 9 * noise);
         return new HourQueryResult(
             new RandomCloudCoverMetric(seed),

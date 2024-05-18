@@ -45,41 +45,40 @@ export default function HomeScreen() {
             {data.map((dayResult, index) => {
                 return (
                 <View style={styles.cardContainer}>
+                <Animated.View 
+                  style={styles.cardContainer}
+                  ref={ref}
+                  layout={LinearTransition.duration(180)}
+                  >
                 <TouchableOpacity 
                     key={index} 
                     onPress ={() => {
                         setCurrentIndex(index === currentIndex ? null : index);
                     }} 
-                    style={styles.cardContainer}
+                    style={styles.card}
                     activeOpacity={0.8}
                 >
-                    <Animated.View 
-                    style={styles.card}
-                    ref={ref}
-                    layout={LinearTransition.duration(180)}
-                    >
-                        <Text style={styles.heading}>{index}</Text>
+                    
+                        <Text style={styles.heading}>{dayResult.dayName}</Text>
                         <View></View>
                         {index === currentIndex && (
 
-                          <Swiper style={styles.wrapper} 
-                          showsButtons={false} 
+                          <Swiper style={styles.slideWrapper} 
+                          showsButtons={true} 
                           loop={false}
                           >
                             <View style={styles.slide}>
-                              <Text style={styles.text}>{}</Text>
+                              <Text style={styles.text}>abcdefg</Text>
                             </View>
                             <View style={styles.slide}>
-                              <Text style={styles.text}>Beautiful</Text>
-                            </View>
-                            <View style={styles.slide}>
-                              <Text style={styles.text}>And simple</Text>
+                              <Text style={styles.text}>hijklmnop</Text>
                             </View>
                           </Swiper>
 
                     )}
-                    </Animated.View> 
                 </TouchableOpacity>
+                </Animated.View> 
+
                 </View>
                 );
             })}
@@ -96,7 +95,6 @@ const styles = StyleSheet.create({
     },
     cardContainer: {
       flexGrow: 1,
-      // padding: 20,
       backgroundColor: '#104256',
     },
     card: {
@@ -106,18 +104,17 @@ const styles = StyleSheet.create({
     },
     heading: {
       fontSize: 38,
-      fontWeight: '900',
+      fontWeight: '800',
       textTransform: 'uppercase',
       letterSpacing: -2,
     },
     body: {
       fontSize: 20,
-      lineHeight: 20 * 1.5,
       textAlign: 'center',
     },
-    wrapper: {
-      height: 200,
-      width: 400
+    slideWrapper: {
+      height: 400,
+      width: '100%'
     },
     slide: {
       flexGrow: 1,

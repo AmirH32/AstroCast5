@@ -49,7 +49,7 @@ export default function HomeScreen() {
               ref={ref}
               layout={LinearTransition.duration(180)}
             >
-              <Text style={styles.heading}>Day {index + 1} (Avg Heuristic: {dayResult.averageHeuristic?.toFixed(2) || 0})</Text>
+              <Text style={styles.heading}>{dayResult.dayName} (Avg Heuristic: {dayResult.averageHeuristic?.toFixed(2) || 0})</Text>
               {index === currentIndex && (
                 <View>
                   <Text style={styles.body}>

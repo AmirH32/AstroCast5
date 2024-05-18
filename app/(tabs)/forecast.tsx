@@ -9,13 +9,14 @@ import { LocationAPI, WeatherAPI, DayResult } from '@/scripts/locationWeatherApi
 
 
 function heuristic (rainfall_mm: number, cloud_cover_percent: number, temperature_celsius: number) {
-  const rain_c = 10.0;
-  const cloud_c = 10.0;
-  const temp_c = 1.0;
-  return rain_c * Math.pow(rainfall_mm, 2) +
-  cloud_c * Math.pow(cloud_cover_percent, 3) +
-  temp_c * Math.pow(temperature_celsius, 0.5)
+    const rain_c = 10.0;
+    const cloud_c = 10.0;
+    const temp_c = 1.0;
+    return rain_c * Math.pow(rainfall_mm, 2) +
+    cloud_c * Math.pow(cloud_cover_percent, 3) +
+    temp_c * Math.pow(temperature_celsius, 0.5)
 }
+
 
 export default function HomeScreen() {
     const [data, setData] = useState<DayResult[]>([]);
@@ -48,11 +49,9 @@ export default function HomeScreen() {
                     key={index} 
                     onPress ={() => {
                         setCurrentIndex(index === currentIndex ? null : index);
-
                     }} 
                     style={styles.cardContainer}
-                    activeOpacity={0.5}
-
+                    activeOpacity={0.8}
                 >
                     <Animated.View 
                     style={styles.card}
@@ -92,12 +91,12 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#242038',
+      backgroundColor: '#fff',
       justifyContent: 'center',
     },
     cardContainer: {
       flexGrow: 1,
-      padding: 20,
+      // padding: 20,
       backgroundColor: '#104256',
     },
     card: {
@@ -117,7 +116,8 @@ const styles = StyleSheet.create({
       textAlign: 'center',
     },
     wrapper: {
-      flex: 1,
+      height: 200,
+      width: 400
     },
     slide: {
       flexGrow: 1,

@@ -12,7 +12,8 @@ import {heuristic, get_colour} from '@/scripts/placeSearch'
 import { ProgressBar} from 'react-native-paper';
 
 const MyComponent = () => (
-  <ProgressBar progress={0.5} color={get_colour(rainfall, cloudcover_percent, temperature_celsius))} />
+  <ProgressBar progress={heuristic(rainfall, cloud_cover_percent, temperature_celsius)} 
+  color={get_colour(rainfall, cloudcover_percent, temperature_celsius)} />
 );
 
 export default MyComponent;

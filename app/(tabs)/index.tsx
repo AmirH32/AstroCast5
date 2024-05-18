@@ -64,7 +64,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   MainContainer: {
-    backgroundColor: 'purple',
+    backgroundColor: '#56244A',
     flex:1,
     padding: 40
   },
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     },
   HeadingContainer:{
-    backgroundColor: '#08247D',
+    backgroundColor: '#1A5974',
     height:'20%',
     width:'100%',
     borderTopRightRadius:20,
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     padding: 20,
     width: 60,
     height:60,
-    backgroundColor: '#08247D',
+    backgroundColor: '#1A5974',
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',

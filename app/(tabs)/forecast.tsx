@@ -7,15 +7,10 @@ import Animated, { LinearTransition, useAnimatedRef } from 'react-native-reanima
 import Swiper from 'react-native-swiper'
 import { LocationAPI, WeatherAPI, DayResult } from '@/scripts/locationWeatherApiInterface';
 
+import {heuristic, get_colour} from '@/scripts/placeSearch'
+import { ProgressBar } from 'react-native-paper';
 
-function heuristic (rainfall_mm: number, cloud_cover_percent: number, temperature_celsius: number) {
-    const rain_c = 10.0;
-    const cloud_c = 10.0;
-    const temp_c = 1.0;
-    return rain_c * Math.pow(rainfall_mm, 2) +
-    cloud_c * Math.pow(cloud_cover_percent, 3) +
-    temp_c * Math.pow(temperature_celsius, 0.5)
-}
+// import { ProgressBar} from 'react-native-paper';
 
 
 export default function HomeScreen() {
@@ -44,7 +39,6 @@ export default function HomeScreen() {
         <StatusBar hidden />
             {data.map((dayResult, index) => {
                 return (
-                <View style={styles.cardContainer}>
                 <Animated.View 
                   style={styles.cardContainer}
                   ref={ref}
@@ -60,12 +54,14 @@ export default function HomeScreen() {
                 >
                     
                         <Text style={styles.heading}>{dayResult.dayName}</Text>
-                        <View></View>
+                        {/* <ProgressBar progress={dayResult.averageHeuristic} 
+                        color={get_colour(dayResult.averageRainfall, averageCloudCover, averageTemperature)} /> */}
                         {index === currentIndex && (
 
                           <Swiper style={styles.slideWrapper} 
                           showsButtons={true} 
-                          loop={false}
+                          // loop={true}
+                          // autoplay={true}
                           >
                             <View style={styles.slide}>
                               <Text style={styles.text}>abcdefg</Text>
@@ -78,8 +74,6 @@ export default function HomeScreen() {
                     )}
                 </TouchableOpacity>
                 </Animated.View> 
-
-                </View>
                 );
             })}
         </View>
@@ -90,12 +84,14 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#242038',
       justifyContent: 'center',
     },
     cardContainer: {
       flexGrow: 1,
       backgroundColor: '#104256',
+      borderRadius: 10,
+      marginVertical: 3
     },
     card: {
       flexGrow: 1,
@@ -113,8 +109,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
     },
     slideWrapper: {
-      height: 400,
-      width: '100%'
+      height: 450
     },
     slide: {
       flexGrow: 1,

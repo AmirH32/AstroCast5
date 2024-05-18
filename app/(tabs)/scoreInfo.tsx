@@ -53,9 +53,10 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: '60%',
-    height: 'auto',
-    resizeMode: 'contain'
-  }
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+}
 
 });

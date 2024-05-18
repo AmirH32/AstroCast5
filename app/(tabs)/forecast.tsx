@@ -8,6 +8,13 @@ import { TouchableOpacity, enableExperimentalWebImplementation } from 'react-nat
 import Animated, { LinearTransition, useAnimatedRef } from 'react-native-reanimated';
 import Swiper from 'react-native-swiper'
 
+function heuristic (rainfall_mm: number, cloud_cover_percent: number, temperature_celsius: number) {
+  const rain_c = 10.0;
+  const cloud_c = 10.0;
+  const temp_c = 1.0;
+  return rain_c * Math.pow(rainfall_mm, 2) +
+  cloud_c * Math.pow(cloud_cover_percent, 3) +
+  temp_c * Math.pow(temperature_celsius, 0.5)
 
 export default function HomeScreen() {
     const data = generateFakeWeatherData();

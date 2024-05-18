@@ -3,6 +3,7 @@ export type DayForecastType = {
   temperature: string; 
 };
 
+
 const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 const generateLoremIpsum = (): string => {

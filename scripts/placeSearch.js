@@ -3,23 +3,30 @@ const fetch = require('node-fetch');
 function sigmoid(x) {
     return 1 / (1 + Math.pow(Math.E, -x))
   }
-  function heuristic (rainfall_mm, cloud_cover_percent, temperature_celsius) {
+export function heuristic (rainfall_mm, cloud_cover_percent, temperature_celsius) {
       const rain_c = 10.0;
       const cloud_c = 10.0;
       const temp_c = 1.0;
-      return sigmoid(rain_c * Math.pow(rainfall_mm, 2) +
+      return 1 - (sigmoid(rain_c * Math.pow(rainfall_mm, 2) +
       cloud_c * Math.pow(cloud_cover_percent, 3) +
-      temp_c * Math.pow(temperature_celsius, 0.5))
+      temp_c * Math.abs(15 - temperature_celsius)))
   }
   
-  function get_colour_rgb (rainfall_mm, cloud_cover_percent, temperature_celsius) {
+  export function get_colour_rgb (rainfall_mm, cloud_cover_percent, temperature_celsius) {
       const t = heuristic(rainfall_mm, cloud_cover_percent, temperature_celsius);
       return [(1-t) * 255, t * 255, 0];
   }
 
-  function get_colour_hsv (rainfall_mm, cloud_cover_percent, temperature_celsius) {
+  export function get_colour_hsv (rainfall_mm, cloud_cover_percent, temperature_celsius) {
     const t = heuristic(rainfall_mm, cloud_cover_percent, temperature_celsius);
     return [t * 150, 1, 1];
+}
+
+export function get_colour(rainfall, cloud_cover_percent, temperature_celsius) {
+    const t = h(r, c, te);
+    const sr = Math.round((1-t) * 255).toString(16);
+    const sg =  Math.round(t*255).toString(16);
+    return sr + "00" + sg;
 }
 
 // Define the RandomDayQuery class and supporting functions/classes

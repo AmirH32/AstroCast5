@@ -1,4 +1,3 @@
-import { HelloWave } from '@/components/HelloWave';
 import React, {useState} from 'react';
 import { View, StyleSheet, Pressable, Dimensions } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';

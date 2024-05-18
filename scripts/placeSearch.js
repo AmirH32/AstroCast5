@@ -12,10 +12,15 @@ function sigmoid(x) {
       temp_c * Math.pow(temperature_celsius, 0.5))
   }
   
-  function get_colour (rainfall_mm, cloud_cover_percent, temperature_celsius) {
+  function get_colour_rgb (rainfall_mm, cloud_cover_percent, temperature_celsius) {
       const t = heuristic(rainfall_mm, cloud_cover_percent, temperature_celsius);
       return [(1-t) * 255, t * 255, 0];
   }
+
+  function get_colour_hsv (rainfall_mm, cloud_cover_percent, temperature_celsius) {
+    const t = heuristic(rainfall_mm, cloud_cover_percent, temperature_celsius);
+    return [t * 150, 1, 1];
+}
 
 // Define the RandomDayQuery class and supporting functions/classes
 class RandomDayQuery {

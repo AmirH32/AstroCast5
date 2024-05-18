@@ -18,6 +18,10 @@ function heuristic (rainfall_mm: number, cloud_cover_percent: number, temperatur
     temp_c * Math.pow(temperature_celsius, 0.5))
 }
 
+function get_colour (rainfall_mm: number, cloud_cover_percent: number, temperature_celsius: number) {
+    const t = heuristic(rainfall_mm, cloud_cover_percent, temperature_celsius);
+    return [(1-t) * 255, 0, t * 255];
+}
 
 export default function HomeScreen() {
     const data = generateFakeWeatherData();

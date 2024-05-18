@@ -6,6 +6,14 @@ import { generateFakeWeatherData } from "@/scripts/get-data";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, { LinearTransition, useAnimatedRef } from 'react-native-reanimated';
 
+function heuristic (rainfall_mm: number, cloud_cover_percent: number, temperature_celsius: number) {
+    const rain_c = 10.0;
+    const cloud_c = 10.0;
+    const temp_c = 1.0;
+    return rain_c * Math.pow(rainfall_mm, 2) +
+    cloud_c * Math.pow(cloud_cover_percent, 3) +
+    temp_c * Math.pow(temperature_celsius, 0.5)
+}
 
 
 export default function HomeScreen() {

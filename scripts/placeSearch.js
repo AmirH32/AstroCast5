@@ -1,5 +1,22 @@
 const fetch = require('node-fetch');
 
+function sigmoid(x) {
+    return 1 / (1 + Math.pow(Math.E, -x))
+  }
+  function heuristic (rainfall_mm, cloud_cover_percent, temperature_celsius) {
+      const rain_c = 10.0;
+      const cloud_c = 10.0;
+      const temp_c = 1.0;
+      return sigmoid(rain_c * Math.pow(rainfall_mm, 2) +
+      cloud_c * Math.pow(cloud_cover_percent, 3) +
+      temp_c * Math.pow(temperature_celsius, 0.5))
+  }
+  
+  function get_colour (rainfall_mm, cloud_cover_percent, temperature_celsius) {
+      const t = heuristic(rainfall_mm, cloud_cover_percent, temperature_celsius);
+      return [(1-t) * 255, 0, t * 255];
+  }
+
 // Define the RandomDayQuery class and supporting functions/classes
 class RandomDayQuery {
     queryDay(easting, northing, daysAfterToday) {

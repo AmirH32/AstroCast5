@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Link } from 'expo-router';
 import { Text, StyleSheet, PanResponder, Animated, Pressable} from 'react-native';
 
 
@@ -38,7 +39,7 @@ class CityTemplate extends Component {
   }
 
   handlePress = () => {
-    navigation.navigate('/new-screen', { variableName: this.props.city })}>
+
   };
 
   render() {
@@ -46,14 +47,16 @@ class CityTemplate extends Component {
     const { pan } = this.state;
 
     return (
-      <Pressable onPress={this.handlePress}>
-        <Animated.View
-          style={[styles.container, { transform: pan.getTranslateTransform() }]}
-          {...this.panResponder.panHandlers}
-        >
-          <Text style={styles.cityText}>{city}</Text>
-        </Animated.View>
-      </Pressable>
+      <Link href={`/forecast?city=${city}`}>
+        <Pressable onPress={this.handlePress}>
+          <Animated.View
+            style={[styles.container, { transform: pan.getTranslateTransform() }]}
+            {...this.panResponder.panHandlers}
+          >
+            <Text style={styles.cityText}>{city}</Text>
+          </Animated.View>
+        </Pressable>
+      </Link>
     );
   }
 }

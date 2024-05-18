@@ -1,6 +1,7 @@
 import { View, StyleSheet, Text } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { useRoute } from '@react-navigation/native';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, { LinearTransition, useAnimatedRef } from 'react-native-reanimated';
@@ -14,6 +15,9 @@ import { ProgressBar } from 'react-native-paper';
 
 
 export default function HomeScreen() {
+    const route = useRoute();
+    const { city } = route.params
+    console.log(city)
     const [data, setData] = useState<DayResult[]>([]);
     const [currentIndex, setCurrentIndex] = useState<number | null>(null);
     const ref = useAnimatedRef();

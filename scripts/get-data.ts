@@ -1,11 +1,10 @@
 export type DayForecastType = {
   day: string;
-  temperature: string; // Change the type of temperature to string
+  temperature: string; 
 };
 
 const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-// Function to generate longer Lorem Ipsum text
 const generateLoremIpsum = (): string => {
   return `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
@@ -21,7 +20,6 @@ export const generateFakeWeatherData = (amount: number = 7): Array<DayForecastTy
   let dayIndex = new Date().getDay();
   let currentDayIndex = 0;
   
-  // Find the index of Monday in the daysOfWeek array
   while (daysOfWeek[currentDayIndex] !== "Monday") {
     currentDayIndex++;
   }
@@ -30,9 +28,9 @@ export const generateFakeWeatherData = (amount: number = 7): Array<DayForecastTy
     const day = daysOfWeek[currentDayIndex % 7];
     result.push({
       day: day,
-      temperature: generateLoremIpsum(), // Use longer Lorem Ipsum text for temperature
+      temperature: generateLoremIpsum(), 
     });
-    currentDayIndex++; // Move to the next day
+    currentDayIndex++; 
   }
   return result;
 };

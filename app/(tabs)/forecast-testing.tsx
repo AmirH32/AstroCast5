@@ -1,27 +1,61 @@
-import {
-  FlatList,
-  ListRenderItemInfo,
-  SafeAreaView,
-  StyleSheet,
-} from "react-native";
-import { generateFakeWeatherData, DayForecastType } from "@/scripts/get-data";
-import { Day } from "@/components/Day";
+import Swiper from 'react-native-swiper'
+ 
+import React, { Component } from 'react'
+import { AppRegistry, StyleSheet, Text, View } from 'react-native'
 
 export default function HomeScreen() {
-  const data = generateFakeWeatherData();
+  // Creating an array of numbers from 0 to 5
+  const data: number[] = [...new Array(6).keys()];
 
-  const renderItem = ({ item }: ListRenderItemInfo<DayForecastType>) => {
-    return <Day item={item} />;
-  };
+  // Array of colors to be used for the background of each item
+  const colors = [
+    '#ff0000',
+    '#00ff00',
+    '#0000ff',
+    '#ffff00',
+    '#ff00ff',
+    '#00ffff',
+  ];
 
+  // Function to render each item in the carousel
+  const styles = StyleSheet.create({
+    wrapper: {},
+    slide1: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#9DD6EB'
+    },
+    slide2: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#97CAE5'
+    },
+    slide3: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#92BBD9'
+    },
+    text: {
+      color: '#fff',
+      fontSize: 30,
+      fontWeight: 'bold'
+    }
+  })
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={data}
-        keyExtractor={(item, index) => `${item.day}${index}`}
-        renderItem={renderItem}
-      />
-    </SafeAreaView>
+    <Swiper style={styles.wrapper} showsButtons={true}>
+      <View style={styles.slide1}>
+        <Text style={styles.text}>Hello Swiper</Text>
+      </View>
+      <View style={styles.slide2}>
+        <Text style={styles.text}>Beautiful</Text>
+      </View>
+      <View style={styles.slide3}>
+        <Text style={styles.text}>And simple</Text>
+      </View>
+    </Swiper>
   );
 }
 

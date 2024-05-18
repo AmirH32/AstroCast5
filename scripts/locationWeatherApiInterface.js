@@ -1,6 +1,6 @@
 const { queryName, RandomDayQuery } = require('./placeSearch');
 
-class LocationAPI {
+export class LocationAPI {
     static async queryLocation(location, numResponses = 5) {
         const results = await queryName(location, numResponses);
         if (results.length === 0) {
@@ -10,7 +10,7 @@ class LocationAPI {
     }
 }
 
-class WeatherAPI {
+export class WeatherAPI {
     /** Gets the weather at each hour of the day. Also returns the suntime and moon phase "data".
      * @param location Location returned from LocationAPI.queryLocation
      * @param day day the "week" starts on

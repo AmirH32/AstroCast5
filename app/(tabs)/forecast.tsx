@@ -2,16 +2,18 @@ import { View, StyleSheet, Text } from 'react-native';
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 
+import {WeatherAPI, LocationAPI} from '@/scripts/locationWeatherApiInterface'
 import { generateFakeWeatherData } from "@/scripts/get-data";
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, enableExperimentalWebImplementation } from 'react-native-gesture-handler';
 import Animated, { LinearTransition, useAnimatedRef } from 'react-native-reanimated';
-
+import Swiper from 'react-native-swiper'
 
 
 export default function HomeScreen() {
     const data = generateFakeWeatherData();
     const [currentIndex, setCurrentIndex] = useState<number | null>(null);
     const ref = useAnimatedRef();
+
 
     return (
     <View style={styles.container}>
@@ -22,9 +24,11 @@ export default function HomeScreen() {
                     key={day} 
                     onPress ={() => {
                         setCurrentIndex(index === currentIndex ? null : index);
+
                     }} 
                     style={styles.cardContainer}
-                    activeOpacity={0.8}
+                    activeOpacity={0.5}
+
                 >
                     <Animated.View 
                     style={styles.card}
@@ -33,9 +37,19 @@ export default function HomeScreen() {
                     >
                         <Text style={styles.heading}>{day}</Text>
                         {index === currentIndex && (
-                        <View>
-                            <Text style={styles.body}>{temperature}</Text>
-                        </View> 
+
+                          <Swiper style={styles.wrapper} showsButtons={true} >
+                            <View style={styles.slide}>
+                              <Text style={styles.text}>Hello Swiper</Text>
+                            </View>
+                            <View style={styles.slide}>
+                              <Text style={styles.text}>Beautiful</Text>
+                            </View>
+                            <View style={styles.slide}>
+                              <Text style={styles.text}>And simple</Text>
+                            </View>
+                          </Swiper>
+
                     )}
                     </Animated.View> 
                 </TouchableOpacity>
@@ -49,11 +63,13 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#242038',
       justifyContent: 'center',
     },
     cardContainer: {
       flexGrow: 1,
+      // padding: 20,
+      backgroundColor: '#104256',
     },
     card: {
       flexGrow: 1,
@@ -71,37 +87,20 @@ const styles = StyleSheet.create({
       lineHeight: 20 * 1.5,
       textAlign: 'center',
     },
+    wrapper: {
+      height: 200,
+      width: 400
+    },
+    slide: {
+      flexGrow: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#9DD6EB',
+    },
+    text: {
+      color: '#fff',
+      fontSize: 30,
+      fontWeight: 'bold'
+    }
   });
   
-// const styles = StyleSheet.create({
-//     container: {
-//       flex: 1,
-//       backgroundColor: "#0D0221",
-//     },
-//     dayContainer: {
-//         flexGrow: 1,
-//         borderWidth: 2,
-//         borderRadius: 10,
-//         padding: 5,
-//         backgroundColor: "#0F0849",
-//     },
-//     day: {
-//         flexGrow: 1,
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//     },
-//     heading: {
-//         fontSize: 38,
-//         fontWeight: 700,
-//         textTransform: 'uppercase',
-//         letterSpacing: -2,
-//         opacity: 0.9,
-//         color: '#E0E0E0', 
-//     },
-//     data: {
-//         color: '#E0E0E0',
-//         fontSize: 20,
-//         lineHeight: 20*1.5,
-//         textAlign: 'center'
-//     }
-//   });

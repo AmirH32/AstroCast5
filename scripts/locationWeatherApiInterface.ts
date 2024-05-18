@@ -5,6 +5,7 @@ const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Sat
 
 export interface Metric {
     getDisplayValue: () => string;
+    getGoodnessHeuristic: () => number;
 }
 
 export interface HourResult {
@@ -62,9 +63,9 @@ export class WeatherAPI {
 
             // Calculate heuristic for each hour
             dayData.hourQueryResults.forEach(hour => {
-                const rainfall_mm = parseFloat(hour.precipitationMetric.getDisplayValue()) || 0;
-                const cloud_cover_percent = parseFloat(hour.cloudCoverMetric.getDisplayValue()) || 0;
-                const temperature_celsius = parseFloat(hour.temperatureMetric.getDisplayValue()) || 0;
+                const rainfall_mm = hour.precipitationMetric.getGoodnessHeuristic();
+                const cloud_cover_percent = hour.cloudCoverMetric.getGoodnessHeuristic();
+                const temperature_celsius = hour.temperatureMetric.getGoodnessHeuristic();
                 hour.averageHeuristic = calculateHeuristic(rainfall_mm, cloud_cover_percent, temperature_celsius);
             });
 

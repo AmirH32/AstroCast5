@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 34,
     fontFamily: 'Arial',
     fontWeight: 'bold',
-    color: '#08247D',
+    color: '#1A5974',
   },
 });
 

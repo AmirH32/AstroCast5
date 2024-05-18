@@ -26,7 +26,7 @@ export default function HomeScreen() {
     useEffect(() => {
       async function fetchData() {
         try {
-          const locations = await LocationAPI.queryLocation("Cambridge");
+          const locations = await LocationAPI.queryLocation(city);
           const location = locations[0];
           const weatherData = WeatherAPI.queryWeatherThroughoutWeek(location, 0);
           setData(weatherData);

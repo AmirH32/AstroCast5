@@ -39,8 +39,6 @@ class CityTemplate extends Component {
   }
 
   handlePress = () => {
-    console.log("New page")
-    // Add navigation here
   };
 
   render() {
@@ -48,7 +46,7 @@ class CityTemplate extends Component {
     const { pan } = this.state;
 
     return (
-      <Link href={`/forcast?city=${city}`}>
+      <Link href={`/forecast?city=${city}`}>
         <Pressable onPress={this.handlePress}>
           <Animated.View
             style={[styles.container, { transform: pan.getTranslateTransform() }]}

@@ -1,12 +1,12 @@
 import { View, StyleSheet, Text } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 
-import {WeatherAPI, LocationAPI} from '@/scripts/locationWeatherApiInterface'
-import { generateFakeWeatherData } from "@/scripts/get-data";
-import { TouchableOpacity, enableExperimentalWebImplementation } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, { LinearTransition, useAnimatedRef } from 'react-native-reanimated';
 import Swiper from 'react-native-swiper'
+import { LocationAPI, WeatherAPI, DayResult } from '@/scripts/locationWeatherApiInterface';
+
 
 function heuristic (rainfall_mm: number, cloud_cover_percent: number, temperature_celsius: number) {
   const rain_c = 10.0;
@@ -15,20 +15,37 @@ function heuristic (rainfall_mm: number, cloud_cover_percent: number, temperatur
   return rain_c * Math.pow(rainfall_mm, 2) +
   cloud_c * Math.pow(cloud_cover_percent, 3) +
   temp_c * Math.pow(temperature_celsius, 0.5)
+}
 
 export default function HomeScreen() {
-    const data = generateFakeWeatherData();
+    const [data, setData] = useState<DayResult[]>([]);
     const [currentIndex, setCurrentIndex] = useState<number | null>(null);
     const ref = useAnimatedRef();
+
+
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          const locations = await LocationAPI.queryLocation("Cambridge");
+          const location = locations[0];
+          const weatherData = WeatherAPI.queryWeatherThroughoutWeek(location, 0);
+          setData(weatherData);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+      fetchData();
+    }, []);
 
 
     return (
     <View style={styles.container}>
         <StatusBar hidden />
-            {data.map(({ day, temperature }, index) => {
+            {data.map((dayResult, index) => {
                 return (
+                <View style={styles.cardContainer}>
                 <TouchableOpacity 
-                    key={day} 
+                    key={index} 
                     onPress ={() => {
                         setCurrentIndex(index === currentIndex ? null : index);
 
@@ -42,12 +59,16 @@ export default function HomeScreen() {
                     ref={ref}
                     layout={LinearTransition.duration(180)}
                     >
-                        <Text style={styles.heading}>{day}</Text>
+                        <Text style={styles.heading}>{index}</Text>
+                        <View></View>
                         {index === currentIndex && (
 
-                          <Swiper style={styles.wrapper} showsButtons={true} >
+                          <Swiper style={styles.wrapper} 
+                          showsButtons={false} 
+                          loop={false}
+                          >
                             <View style={styles.slide}>
-                              <Text style={styles.text}>Hello Swiper</Text>
+                              <Text style={styles.text}>{}</Text>
                             </View>
                             <View style={styles.slide}>
                               <Text style={styles.text}>Beautiful</Text>
@@ -60,6 +81,7 @@ export default function HomeScreen() {
                     )}
                     </Animated.View> 
                 </TouchableOpacity>
+                </View>
                 );
             })}
         </View>
@@ -75,7 +97,7 @@ const styles = StyleSheet.create({
     },
     cardContainer: {
       flexGrow: 1,
-      // padding: 20,
+      padding: 20,
       backgroundColor: '#104256',
     },
     card: {
@@ -95,8 +117,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
     },
     wrapper: {
-      height: 200,
-      width: 400
+      flex: 1,
     },
     slide: {
       flexGrow: 1,

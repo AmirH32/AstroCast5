@@ -7,17 +7,9 @@ import Animated, { LinearTransition, useAnimatedRef } from 'react-native-reanima
 
 import { LocationAPI, WeatherAPI, DayResult } from '@/scripts/locationWeatherApiInterface';
 
-function heuristic(rainfall_mm: number, cloud_cover_percent: number, temperature_celsius: number) {
-  const rain_c = 10.0;
-  const cloud_c = 10.0;
-  const temp_c = 1.0;
-  return rain_c * Math.pow(rainfall_mm, 2) +
-    cloud_c * Math.pow(cloud_cover_percent, 3) +
-    temp_c * Math.pow(temperature_celsius, 0.5);
-}
-
 export default function HomeScreen() {
   const [data, setData] = useState<DayResult[]>([]);
+  const [weekAverageHeuristic, setWeekAverageHeuristic] = useState<number | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const ref = useAnimatedRef();
 
@@ -28,6 +20,9 @@ export default function HomeScreen() {
         const location = locations[0];
         const weatherData = WeatherAPI.queryWeatherThroughoutWeek(location, 0);
         setData(weatherData);
+
+        const averageHeuristic = WeatherAPI.computeWeekAverageHeuristic(weatherData);
+        setWeekAverageHeuristic(averageHeuristic);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -38,6 +33,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <StatusBar hidden />
+      <Text style={styles.heading}>Week Average Heuristic: {weekAverageHeuristic?.toFixed(2)}</Text>
       {data.map((dayResult, index) => {
         return (
           <TouchableOpacity
@@ -53,7 +49,7 @@ export default function HomeScreen() {
               ref={ref}
               layout={LinearTransition.duration(180)}
             >
-              <Text style={styles.heading}>Day {index + 1}</Text>
+              <Text style={styles.heading}>Day {index + 1} (Avg Heuristic: {dayResult.averageHeuristic?.toFixed(2) || 0})</Text>
               {index === currentIndex && (
                 <View>
                   <Text style={styles.body}>
@@ -72,6 +68,9 @@ export default function HomeScreen() {
                       </Text>
                       <Text style={styles.body}>
                         Temperature: {hourResult.temperatureMetric.getDisplayValue()}
+                      </Text>
+                      <Text style={styles.body}>
+                        Hour Heuristic: {hourResult.averageHeuristic?.toFixed(2) || 0}
                       </Text>
                     </View>
                   ))}

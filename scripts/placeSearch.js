@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 function sigmoid(x) {
     return 1 / (1 + Math.pow(Math.E, -x))
@@ -33,7 +34,7 @@ export function get_colour(rainfall, cloud_cover_percent, temperature_celsius) {
 class RandomDayQuery {
     queryDay(easting, northing, daysAfterToday) {
         const hourQueryResults = Array.from({ length: 24 }, (_, x) => new RandomHourQuery().queryHour(easting, northing, x));
-        return new DayQueryResult(hourQueryResults, new FixedMoonPhaseMetric(daysAfterToday), new FixedSuntimeMetric(daysAfterToday));
+        return new DayQueryResult(hourQueryResults, new FixedMoonPhaseMetric(daysAfterToday), new FixedSuntimeMetric(daysAfterToday), daysOfWeek[daysAfterToday % 7]);
     }
 }
 
@@ -85,10 +86,11 @@ class SearchResponse {
 }
 
 class DayQueryResult {
-    constructor(hourQueryResults, moonPhaseMetric, suntimeMetric) {
+    constructor(hourQueryResults, moonPhaseMetric, suntimeMetric, dayName) {
         this.hourQueryResults = hourQueryResults;
         this.moonPhaseMetric = moonPhaseMetric;
         this.suntimeMetric = suntimeMetric;
+        this.dayName = dayName;
     }
 }
 

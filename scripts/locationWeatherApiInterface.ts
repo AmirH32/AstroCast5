@@ -1,5 +1,8 @@
 const { queryName, RandomDayQuery } = require('./placeSearch');
 
+const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+
 export interface Metric {
     getDisplayValue: () => string;
 }
@@ -16,6 +19,7 @@ export interface DayResult {
     suntimeMetric: Metric;
     hourQueryResults: HourResult[];
     averageHeuristic: number;
+    dayName: string;
 }
 
 export interface Location {

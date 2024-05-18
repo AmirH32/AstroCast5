@@ -39,6 +39,7 @@ class CityTemplate extends Component {
 
   handlePress = () => {
     console.log("New page")
+    // Add navigation here
   };
 
   render() {

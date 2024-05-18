@@ -1,28 +1,28 @@
 const { queryName, RandomDayQuery } = require('./placeSearch');
 
-interface Metric {
+export interface Metric {
     getDisplayValue: () => string;
 }
 
-interface HourResult {
+export interface HourResult {
     cloudCoverMetric: Metric;
     precipitationMetric: Metric;
     temperatureMetric: Metric;
 }
 
-interface DayResult {
+export interface DayResult {
     moonPhaseMetric: Metric;
     suntimeMetric: Metric;
     hourQueryResults: HourResult[];
 }
 
-interface Location {
+export interface Location {
     easting: number;
     northing: number;
     name: string;
 }
 
-class LocationAPI {
+export class LocationAPI {
     static async queryLocation(location: string, numResponses = 5): Promise<Location[]> {
         const results = await queryName(location, numResponses);
         if (results.length === 0) {
@@ -32,7 +32,7 @@ class LocationAPI {
     }
 }
 
-class WeatherAPI {
+export class WeatherAPI {
     /** Gets the weather at each hour of the day. Also returns the suntime and moon phase "data".
      * @param location Location returned from LocationAPI.queryLocation
      * @param day day the "week" starts on

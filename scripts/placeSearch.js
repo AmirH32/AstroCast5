@@ -14,7 +14,7 @@ function sigmoid(x) {
   
   function get_colour (rainfall_mm, cloud_cover_percent, temperature_celsius) {
       const t = heuristic(rainfall_mm, cloud_cover_percent, temperature_celsius);
-      return [(1-t) * 255, 0, t * 255];
+      return [(1-t) * 255, t * 255, 0];
   }
 
 // Define the RandomDayQuery class and supporting functions/classes

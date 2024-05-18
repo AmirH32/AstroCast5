@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
   Heading:{
     textAlign: 'center',
     fontSize: 54,
-    fontFamily: 'Arial',
     fontWeight: 'bold',
     color: '#E8E9F3'
   },

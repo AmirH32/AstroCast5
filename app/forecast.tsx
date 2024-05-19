@@ -70,7 +70,7 @@ export default function HomeScreen() {
                       </View>
                     </View>
 
-                    <View style={styles.slide}>
+                    <View style={styles.slide2}>
                       <View style={styles.headerRow}>
                         <Text style={styles.headerText}>Hour</Text>
                         <Text style={styles.headerText}>Temperature</Text>
@@ -135,9 +135,10 @@ const styles = StyleSheet.create({
   slideWrapper: {
     flexShrink: 1,
   },
-  slide: {
+  slide2: {
     flexShrink: 1,
     backgroundColor: '#492E60',
+    padding: 10
   },
   slide1: {
     flexShrink: 1,

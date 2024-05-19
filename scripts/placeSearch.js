@@ -191,7 +191,7 @@ class RandomTemperatureMetric {
     }
 
     getGoodnessHeuristic() {
-        return this.goodness;
+        return (this.goodness + 6) / 16 * 10;
     }
 
     getDisplayValue() {

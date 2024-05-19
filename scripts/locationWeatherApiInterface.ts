@@ -9,6 +9,7 @@ export interface Metric {
 }
 
 export interface HourResult {
+    hourDisplayValue: string;
     cloudCoverMetric: Metric;
     precipitationMetric: Metric;
     temperatureMetric: Metric;
@@ -41,9 +42,9 @@ export function defaultLocation(): Location {
 /**
  * @param goodness_heuristic between 0 and 10 please
  */
-export function heuristic_colour_hsl(goodness_heuristic: number): string {
+export function heuristic_colour_hsl(goodness_heuristic: number, alpha: number): string {
     
-    return `hsl(${sigmoid(goodness_heuristic / 10, 10) * 120}, 100%, 50%)`;
+    return `hsla(${sigmoid(goodness_heuristic / 10, 10) * 120}, 100%, 50%, ${alpha})`;
 }
 
 function sigmoid(x: number, s: number): number {
@@ -76,6 +77,20 @@ function formatDate(date: Date): string {
     return `${day}/${month}/${year}`;
 }
 
+function formatHour(hour: number): string {
+    if (hour < 0 || hour > 23) {
+        throw new Error("Hour must be between 0 and 23");
+    }
+
+    // Pad single digit hours with a leading zero
+    const formattedHour = hour.toString().padStart(2, '0');
+
+    // Append minutes
+    const formattedTime = `${formattedHour}:00`;
+
+    return formattedTime;
+}
+
 export class WeatherAPI {
     
 
@@ -100,11 +115,13 @@ export class WeatherAPI {
             let totalHourHeuristic = 0;
 
             // Calculate heuristic for each hour and sum them
-            dayData.hourQueryResults.forEach(hour => {
+            dayData.hourQueryResults.forEach((hour, index) => {
                 const precipitationHeuristic = hour.precipitationMetric.getGoodnessHeuristic();
                 const cloudCoverHeuristic = hour.cloudCoverMetric.getGoodnessHeuristic();
                 const temperatureHeuristic = hour.temperatureMetric.getGoodnessHeuristic();
-
+                
+                hour.hourDisplayValue = formatHour(index);
+                    
                 hour.averageHeuristic =
                     precipitationWeight * precipitationHeuristic +
                     cloudCoverWeight * cloudCoverHeuristic +

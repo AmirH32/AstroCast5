@@ -50,7 +50,7 @@ export default function HomeScreen() {
                 </Text>
                 <ProgressBar
                   progress={dayResult.averageHeuristic / 10}
-                  color={heuristic_colour_hsl(dayResult.averageHeuristic)}
+                  color={heuristic_colour_hsl(dayResult.averageHeuristic, 1)}
                 />
               </View>
 
@@ -80,10 +80,18 @@ export default function HomeScreen() {
                       <View style={styles.separator} />
                       {dayResult.hourQueryResults.map((hourResult, index) => (
                         <View style={styles.row} key={index}>
-                          <Text style={styles.cell}>{index}</Text>
-                          <Text style={styles.cell}>{hourResult.temperatureMetric.getDisplayValue()}</Text>
-                          <Text style={styles.cell}>{hourResult.cloudCoverMetric.getDisplayValue()}</Text>
-                          <Text style={styles.cell}>{hourResult.precipitationMetric.getDisplayValue()}</Text>
+                          <Text style={[styles.cell, { backgroundColor: heuristic_colour_hsl(hourResult.averageHeuristic, 0.25) }]}>
+                            {hourResult.hourDisplayValue}
+                          </Text>
+                          <Text style={[styles.cell, { backgroundColor: heuristic_colour_hsl(hourResult.temperatureMetric.getGoodnessHeuristic(), 0.25) }]}>
+                            {hourResult.temperatureMetric.getDisplayValue()}
+                          </Text>
+                          <Text style={[styles.cell, { backgroundColor: heuristic_colour_hsl(hourResult.cloudCoverMetric.getGoodnessHeuristic(), 0.25) }]}>
+                            {hourResult.cloudCoverMetric.getDisplayValue()}
+                          </Text>
+                          <Text style={[styles.cell, { backgroundColor: heuristic_colour_hsl(hourResult.precipitationMetric.getGoodnessHeuristic(), 0.25) }]}>
+                            {hourResult.precipitationMetric.getDisplayValue()}
+                          </Text>
                         </View>
                       ))}
                     </View>

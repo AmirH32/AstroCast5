@@ -30,7 +30,7 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
-      {/* Add top bar here w/ back arrow (left), location (centre) and week (right) */}
+      {/* Add top bar here w/ back arrow (left), location (centre) and week (right) + help screen button? */}
 
       {data.map((dayResult, index) => (
         <Animated.View
@@ -49,7 +49,8 @@ export default function HomeScreen() {
           >
             <View style={styles.cardHeader}>
               <Text style={styles.heading}>
-                {dayResult.dayName} (Heuristic: {Math.round(dayResult.averageHeuristic * 10)}%)
+                {dayResult.dayName} 
+                {/* (Heuristic: {Math.round(dayResult.averageHeuristic * 10)}%) */}
               </Text>
               {<ProgressBar
                 progress={dayResult.averageHeuristic / 10}
@@ -62,9 +63,14 @@ export default function HomeScreen() {
             <View style={{flexShrink: 1, 
             width: '100%',}}>
               <Swiper style={styles.slideWrapper}
-                showsButtons={true}
-                // loop={true}
+                showsButtons={true} // can set to false
+                loop={false}
                 // autoplay={true}
+                showsPagination={true}
+                horizontal={true}
+
+
+
               >
                 <View style={styles.slide}>
                   <Text style={styles.text}>abcdefg</Text>
@@ -105,7 +111,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexGrow: 1,
     flexShrink: 1,  
-    backgroundColor: '#492E60',
+    // backgroundColor: '#492E60',
+    backgroundColor: '#8E6786',
     borderRadius: 10,
     marginVertical: 5
 
@@ -123,17 +130,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   heading: {
-    fontSize: 38,
+    fontSize: 25,
     fontWeight: '800',
     textTransform: 'uppercase',
-    letterSpacing: -2,
+    letterSpacing: -1,
+    paddingBottom: 2,
+    color: '#C3B9B7'
   },
   body: {
     fontSize: 20,
     textAlign: 'center',
   },
   swiperContainer: {
-    flexShrink: 1,  // 
+    flexGrow: 1,  // 
     width: '100%',
   },
   slideWrapper: {
@@ -147,7 +156,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#fff',
-    fontSize: 30,
+    fontSize: 15,
     fontWeight: 'bold'
   },
 });

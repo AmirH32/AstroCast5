@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   },
   text1: {
     color: '#F5F1ED',
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'left',
   },

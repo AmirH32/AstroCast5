@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useRoute } from '@react-navigation/native';
@@ -28,8 +28,10 @@ export default function HomeScreen() {
   }, [northing, easting]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <StatusBar hidden />
+      {/* Add top bar here w/ back arrow (left), location (centre) and week (right) */}
+
       {data.map((dayResult, index) => (
         <Animated.View
           key={index}
@@ -57,7 +59,8 @@ export default function HomeScreen() {
 
 
             {index === currentIndex && (
- 
+            <View style={{flexShrink: 1, 
+            width: '100%',}}>
               <Swiper style={styles.slideWrapper}
                 showsButtons={true}
                 // loop={true}
@@ -82,30 +85,37 @@ export default function HomeScreen() {
                   </Text>
                 </View>
               </Swiper>
+              </View>
             )}
           </TouchableOpacity>
         </Animated.View>
       ))}
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#242038',
+    backgroundColor: '#221D34',
     justifyContent: 'center',
   },
   cardContainer: {
     width: '95%',
     alignSelf: 'center',
     flexGrow: 1,
-    backgroundColor: '#104256',
+    flexShrink: 1,  
+    backgroundColor: '#492E60',
     borderRadius: 10,
-    marginVertical: 3
+    marginVertical: 5
+
   },
   cardHeader: {
     width: '95%',
+    borderRadius: 10,
+    marginVertical: 10,
+    paddingBottom: 25,
+
   },
   card: {
     flexGrow: 1,
@@ -122,19 +132,22 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
   },
+  swiperContainer: {
+    flexShrink: 1,  // 
+    width: '100%',
+  },
   slideWrapper: {
-
-    height: 450
+    flexShrink: 1,
   },
   slide: {
-    flexGrow: 1,
+    flexShrink: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    //backgroundColor: '#9DD6EB',
+    backgroundColor: '#492E60',
   },
   text: {
     color: '#fff',
     fontSize: 30,
     fontWeight: 'bold'
-  }
+  },
 });

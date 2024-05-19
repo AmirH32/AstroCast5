@@ -46,7 +46,7 @@ export default function HomeScreen() {
             >
               <View style={styles.cardHeader}>
                 <Text style={styles.heading}>
-                  {dayResult.dayName}
+                  {dayResult.dayName} - {dayResult.dayDate}
                 </Text>
                 <ProgressBar
                   progress={dayResult.averageHeuristic / 10}

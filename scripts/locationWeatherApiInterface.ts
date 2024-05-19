@@ -24,6 +24,7 @@ export interface DayResult {
     averageTemperatureHeuristic: number;
     averageHeuristic: number;
     dayName: string;
+    dayDate: string;
 }
 
 export interface Location {
@@ -61,7 +62,22 @@ export class LocationAPI {
     }
 }
 
+function addDays(date: Date, days: number): Date {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
+
+function formatDate(date: Date): string {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
+}
+
 export class WeatherAPI {
+    
 
     static queryWeatherThroughoutWeek(northing: number, easting: number, weekNo: number): DayResult[] {
         const weekData: DayResult[] = [];
@@ -69,6 +85,10 @@ export class WeatherAPI {
         const precipitationWeight = 0.3;
         const cloudCoverWeight = 0.4;
         const temperatureWeight = 0.2;
+
+        const today = new Date();
+        const offset = ((today.getDay() - 1) % 7 + 7) % 7;
+        const weekStart = addDays(today, weekNo * 7 + -offset);
 
         for (let i = 0; i < 7; i++) {
             const currentDay = weekNo * 7 + i;
@@ -103,6 +123,7 @@ export class WeatherAPI {
             dayData.averageCloudCoverHeuristic = totalCloudCoverHeuristic / numHours;
             dayData.averageTemperatureHeuristic = totalTemperatureHeuristic / numHours;
             dayData.averageHeuristic = sigmoid(totalHourHeuristic * 0.1 / numHours, 5) * 10;
+            dayData.dayDate = formatDate(addDays(weekStart, i));
 
             weekData.push(dayData);
         }

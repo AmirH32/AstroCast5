@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Link } from 'expo-router';
 import { Text, StyleSheet, PanResponder, Animated, Pressable} from 'react-native';
-
+import { Location, WeatherAPI, DayResult } from '@/scripts/locationWeatherApiInterface';
 
 class CityTemplate extends Component {
   constructor(props) {
@@ -47,13 +47,13 @@ class CityTemplate extends Component {
     const { pan } = this.state;
 
     return (
-      <Link href={`/forecast?city=${city}`}>
+      <Link href={`/forecast?city=${city.name}&northing=${city.northing}&easting=${city.easting}`}>
         <Pressable onPress={this.handlePress}>
           <Animated.View
             style={[styles.container, { transform: pan.getTranslateTransform() }]}
             {...this.panResponder.panHandlers}
           >
-            <Text style={styles.cityText}>{city}</Text>
+            <Text style={styles.cityText}>{city.name}</Text>
           </Animated.View>
         </Pressable>
       </Link>

@@ -1,79 +1,85 @@
+import { LocationAPI, WeatherAPI, DayResult } from '@/scripts/locationWeatherApiInterface';
 import React, { useState } from 'react';
 import {StyleSheet, TextInput, FlatList, View, Text} from 'react-native';
 
 const SearchBar = ({ onCitySelect }) => {
-    const [searchText, setSearchText] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
-    const [selectedCity, setSelectedCity] = useState('');
+  const [searchText, setSearchText] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+  const [selectedCity, setSelectedCity] = useState('');
+
+  //const cities = [
+  //  "Bath",
+  //  "Birmingham",
+  //  "Bradford",
+  //  "Brighton & Hove",
+  //  "Bristol",
+  //  "Cambridge",
+  //  "Canterbury",
+  //  "Carlisle",
+  //  "Chelmsford",
+  //  "Chester",
+  //  "Chichester",
+  //  "Colchester",
+  //  "Coventry",
+  //  "Derby",
+  //  "Doncaster",
+  //  "Durham",
+  //  "Ely",
+  //  "Exeter",
+  //  "Gloucester",
+  //  "Hereford",
+  //  "Kingston-upon-Hull",
+  //  "Lancaster",
+  //  "Leeds",
+  //  "Leicester",
+  //  "Lichfield",
+  //  "Lincoln",
+  //  "Liverpool",
+  //  "London",
+  //  "Manchester",
+  //  "Milton Keynes",
+  //  "Newcastle-upon-Tyne",
+  //  "Norwich",
+  //  "Nottingham",
+  //  "Oxford",
+  //  "Peterborough",
+  //  "Plymouth",
+  //  "Portsmouth",
+  //  "Preston",
+  //  "Ripon",
+  //  "Salford",
+  //  "Salisbury",
+  //  "Sheffield",
+  //  "Southampton",
+  //  "Southend-on-Sea",
+  //  "St Albans",
+  //  "Stoke on Trent",
+  //  "Sunderland",
+  //  "Truro",
+  //  "Wakefield",
+  //  "Wells",
+  //  "Westminster",
+  //  "Winchester",
+  //  "Wolverhampton",
+  //  "Worcester",
+  //  "York"
+  //];
   
-    const cities = [
-      "Bath",
-      "Birmingham",
-      "Bradford",
-      "Brighton & Hove",
-      "Bristol",
-      "Cambridge",
-      "Canterbury",
-      "Carlisle",
-      "Chelmsford",
-      "Chester",
-      "Chichester",
-      "Colchester",
-      "Coventry",
-      "Derby",
-      "Doncaster",
-      "Durham",
-      "Ely",
-      "Exeter",
-      "Gloucester",
-      "Hereford",
-      "Kingston-upon-Hull",
-      "Lancaster",
-      "Leeds",
-      "Leicester",
-      "Lichfield",
-      "Lincoln",
-      "Liverpool",
-      "London",
-      "Manchester",
-      "Milton Keynes",
-      "Newcastle-upon-Tyne",
-      "Norwich",
-      "Nottingham",
-      "Oxford",
-      "Peterborough",
-      "Plymouth",
-      "Portsmouth",
-      "Preston",
-      "Ripon",
-      "Salford",
-      "Salisbury",
-      "Sheffield",
-      "Southampton",
-      "Southend-on-Sea",
-      "St Albans",
-      "Stoke on Trent",
-      "Sunderland",
-      "Truro",
-      "Wakefield",
-      "Wells",
-      "Westminster",
-      "Winchester",
-      "Wolverhampton",
-      "Worcester",
-      "York"
-    ];
-    
 
-    const handleSearchTextChange = (text) => {
-        setSearchText(text);
+  const handleSearchTextChange = async (text) => {
 
-        const filteredSuggestions = cities.filter((item) =>
-          item.toLowerCase().includes(text.toLowerCase())
-        );
-
-        setSuggestions(filteredSuggestions);
-    };
+    //const filteredSuggestions = cities.filter((item) =>
+    //  item.toLowerCase().includes(text.toLowerCase())
+    //);
+    setSearchText(text);
+    try {
+      const filteredSuggestions = await LocationAPI.queryLocation(text, 10);
+      setSuggestions(filteredSuggestions);
+    }
+    catch {
+      setSuggestions([]);
+    }
+  };
 
     const renderSuggestion = ({ item }) => (
       <Text
@@ -82,7 +88,7 @@ const SearchBar = ({ onCitySelect }) => {
           onCitySelect(item)
         }}
       >
-        {item}
+        {item.name}
       </Text>
     );
     
@@ -99,7 +105,7 @@ const SearchBar = ({ onCitySelect }) => {
             <FlatList
               data={suggestions}
               renderItem={renderSuggestion}
-              keyExtractor={(item) => item}
+              keyExtractor={(item) => item.name}
               style={styles.suggestionList}
             />
           )}

@@ -3,7 +3,10 @@ const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Sat
 
 function sigmoid(x) {
     return 1 / (1 + Math.pow(Math.E, -x))
-  }
+}
+  
+// this makes a lot of sense, but in the API implementation i have, the metrics are simply mapped to heuristic: 
+// see below... getGoodnessHeuristic() methods.
 export function heuristic (rainfall_mm, cloud_cover_percent, temperature_celsius) {
       const rain_c = 10.0;
       const cloud_c = 10.0;
@@ -22,6 +25,7 @@ export function heuristic (rainfall_mm, cloud_cover_percent, temperature_celsius
     const t = heuristic(rainfall_mm, cloud_cover_percent, temperature_celsius);
     return [t * 150, 1, 1];
 }
+
 
 export function get_colour(rainfall, cloud_cover_percent, temperature_celsius) {
     const t = h(r, c, te);
@@ -77,7 +81,7 @@ class RandomHourQuery {
 }
 
 // Define SearchResponse and other metric classes
-class SearchResponse {
+export class SearchResponse {
     constructor(name, northing, easting) {
         this.name = name;
         this.northing = northing;

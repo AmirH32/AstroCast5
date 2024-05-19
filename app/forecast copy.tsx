@@ -21,7 +21,7 @@ export default function HomeScreen() {
         const weatherData = WeatherAPI.queryWeatherThroughoutWeek(location, 0);
         setData(weatherData);
 
-        const averageHeuristic = WeatherAPI.computeWeekAverageHeuristic(weatherData);
+        //const averageHeuristic = WeatherAPI.computeWeekAverageHeuristic(weatherData);
         setWeekAverageHeuristic(averageHeuristic);
       } catch (error) {
         console.error("Error fetching data:", error);

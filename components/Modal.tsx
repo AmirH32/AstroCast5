@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Modal, Pressable, TextInput} from 'react-native';
+import { View, Text, StyleSheet, Modal, Pressable } from 'react-native';
 import SearchBar from '@/components/SearchBar';
-
+import { defaultLocation, WeatherAPI, DayResult } from '@/scripts/locationWeatherApiInterface';
 
 const ModalScreen = ({ visible, onClose, onCitySelect }) => {
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCity, setSelectedCity] = useState(defaultLocation);
 
   const handleSelectCity = (city) => {
     setSelectedCity(city);
-  }
+  };
 
   const returnSelectedCity = () => {
-    onCitySelect(selectedCity);
-  }
+    if (selectedCity) {
+      onCitySelect(selectedCity);
+    }
+  };
 
   return (
     <Modal
@@ -23,18 +25,16 @@ const ModalScreen = ({ visible, onClose, onCitySelect }) => {
     >
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-
-
           <SearchBar onCitySelect={handleSelectCity} />
-          {selectedCity && <Text style={styles.selectedCity}>Selected City: {selectedCity}</Text>}
+          {selectedCity && <Text style={styles.selectedCity}>Selected City: {selectedCity.name}</Text>}
 
           <View style={styles.buttonContainer}>
             <Pressable style={styles.selectButton} onPress={returnSelectedCity}>
-              <Text style={styles.closeButtonText}>Select</Text>
+              <Text style={styles.buttonText}>Select</Text>
             </Pressable>
 
             <Pressable style={styles.closeButton} onPress={onClose}>
-              <Text style={styles.closeButtonText}>Close</Text>
+              <Text style={styles.buttonText}>Close</Text>
             </Pressable>
           </View>
         </View>
@@ -57,22 +57,24 @@ const styles = StyleSheet.create({
     height: '80%',
     width: '80%',
   },
-  closeButton: {
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 20,
+  },
+  selectButton: {
+    backgroundColor: 'blue',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  closeButton: {
     backgroundColor: 'red',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
   },
-  selectButton:{
-    backgroundColor: 'blue',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginTop: 20,
-    marginRight: '40%',
-  },
-  closeButtonText: {
+  buttonText: {
     color: 'white',
     fontWeight: 'bold',
   },
@@ -80,10 +82,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 30,
   },
-  buttonContainer: {
-    marginTop: '100%',
-    flexDirection:'row',
-  }
 });
 
 export default ModalScreen;

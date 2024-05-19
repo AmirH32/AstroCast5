@@ -1,4 +1,4 @@
-const { queryName, RandomDayQuery } = require('./placeSearch');
+const { queryName, SearchResponse, RandomDayQuery } = require('./placeSearch');
 
 const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
@@ -19,6 +19,9 @@ export interface DayResult {
     moonPhaseMetric: Metric;
     suntimeMetric: Metric;
     hourQueryResults: HourResult[];
+    averagePrecipitationHeuristic: number;
+    averageCloudCoverHeuristic: number;
+    averageTemperatureHeuristic: number;
     averageHeuristic: number;
     dayName: string;
 }
@@ -28,6 +31,25 @@ export interface Location {
     northing: number;
     name: string;
 }
+
+export function defaultLocation(): Location {
+    const location = new SearchResponse("Null", 0, 0);
+    return location;
+}
+
+/**
+ * @param goodness_heuristic between 0 and 10 please
+ */
+export function heuristic_colour_hsl(goodness_heuristic: number): string {
+    
+    return `hsl(${sigmoid(goodness_heuristic / 10, 10) * 120}, 100%, 50%)`;
+}
+
+function sigmoid(x: number, s: number): number {
+    //https://www.desmos.com/calculator/2f8lh6qrry
+    return 1 / (1 + Math.exp(-s * (x - 0.5)));
+}
+
 
 export class LocationAPI {
     static async queryLocation(location: string, numResponses = 5): Promise<Location[]> {
@@ -39,48 +61,52 @@ export class LocationAPI {
     }
 }
 
-function calculateHeuristic(rainfall_mm: number, cloud_cover_percent: number, temperature_celsius: number): number {
-    const rain_c = 10.0;
-    const cloud_c = 10.0;
-    const temp_c = 1.0;
-    return rain_c * Math.pow(rainfall_mm, 2) +
-        cloud_c * Math.pow(cloud_cover_percent, 3) +
-        temp_c * Math.pow(temperature_celsius, 0.5);
-}
-
-function computeAverageHeuristic(hourResults: HourResult[]): number {
-    if (hourResults.length === 0) return 0;
-    const totalHeuristic = hourResults.reduce((sum, hour) => sum + (hour.averageHeuristic || 0), 0);
-    return totalHeuristic / hourResults.length;
-}
-
 export class WeatherAPI {
-    static queryWeatherThroughoutWeek(location: Location, day: number): DayResult[] {
-        const weekData: DayResult[] = [];
-        for (let i = 0; i < 7; i++) {
-            const currentDay = day + i;
-            const dayData: DayResult = new RandomDayQuery().queryDay(location.easting, location.northing, currentDay);
 
-            // Calculate heuristic for each hour
+    static queryWeatherThroughoutWeek(northing: number, easting: number, weekNo: number): DayResult[] {
+        const weekData: DayResult[] = [];
+
+        const precipitationWeight = 0.3;
+        const cloudCoverWeight = 0.4;
+        const temperatureWeight = 0.2;
+
+        for (let i = 0; i < 7; i++) {
+            const currentDay = weekNo * 7 + i;
+            const dayData: DayResult = new RandomDayQuery().queryDay(northing, easting, currentDay);
+
+            let totalPrecipitationHeuristic = 0;
+            let totalCloudCoverHeuristic = 0;
+            let totalTemperatureHeuristic = 0;
+            let totalHourHeuristic = 0;
+
+            // Calculate heuristic for each hour and sum them
             dayData.hourQueryResults.forEach(hour => {
-                const rainfall_mm = hour.precipitationMetric.getGoodnessHeuristic();
-                const cloud_cover_percent = hour.cloudCoverMetric.getGoodnessHeuristic();
-                const temperature_celsius = hour.temperatureMetric.getGoodnessHeuristic();
-                hour.averageHeuristic = calculateHeuristic(rainfall_mm, cloud_cover_percent, temperature_celsius);
+                const precipitationHeuristic = hour.precipitationMetric.getGoodnessHeuristic();
+                const cloudCoverHeuristic = hour.cloudCoverMetric.getGoodnessHeuristic();
+                const temperatureHeuristic = hour.temperatureMetric.getGoodnessHeuristic();
+
+                hour.averageHeuristic =
+                    precipitationWeight * precipitationHeuristic +
+                    cloudCoverWeight * cloudCoverHeuristic +
+                    temperatureWeight * temperatureHeuristic;
+
+                totalPrecipitationHeuristic += precipitationHeuristic;
+                totalCloudCoverHeuristic += cloudCoverHeuristic;
+                totalTemperatureHeuristic += temperatureHeuristic;
+                totalHourHeuristic += hour.averageHeuristic;
             });
 
-            // Calculate average heuristic for the day
-            dayData.averageHeuristic = computeAverageHeuristic(dayData.hourQueryResults);
+            const numHours = dayData.hourQueryResults.length;
+
+            // Calculate average heuristics for the day
+            dayData.averagePrecipitationHeuristic = totalPrecipitationHeuristic / numHours;
+            dayData.averageCloudCoverHeuristic = totalCloudCoverHeuristic / numHours;
+            dayData.averageTemperatureHeuristic = totalTemperatureHeuristic / numHours;
+            dayData.averageHeuristic = sigmoid(totalHourHeuristic * 0.1 / numHours, 5) * 10;
 
             weekData.push(dayData);
         }
 
         return weekData;
-    }
-
-    static computeWeekAverageHeuristic(weekData: DayResult[]): number {
-        if (weekData.length === 0) return 0;
-        const totalHeuristic = weekData.reduce((sum, day) => sum + (day.averageHeuristic || 0), 0);
-        return totalHeuristic / weekData.length;
     }
 }

@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   },
   text1: {
     color: '#F5F1ED',
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: 'bold',
     textAlign: 'left',
     flex: 1

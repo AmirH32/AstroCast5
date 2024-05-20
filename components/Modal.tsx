@@ -26,7 +26,7 @@ const ModalScreen = ({ visible, onClose, onCitySelect }) => {
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <SearchBar onCitySelect={handleSelectCity} />
-          {selectedCity && <Text style={styles.selectedCity}>Selected City: {selectedCity.name}</Text>}
+          {selectedCity && <Text style={styles.selectedCity}>Selected City:<br/><br/>{selectedCity.name}</Text>}
 
           <View style={styles.buttonContainer}>
             <Pressable style={styles.selectButton} onPress={returnSelectedCity}>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: '#836b8c',
     padding: 20,
     borderRadius: 10,
     height: '80%',
@@ -79,6 +79,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   selectedCity: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: 'bold',
     marginBottom: 10,
     marginTop: 30,
   },

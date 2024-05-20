@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Pressable, Dimensions } from 'react-native';
+import { Text, View, StyleSheet, Pressable, Dimensions, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -7,6 +7,8 @@ import ModalScreen from '@/components/Modal';
 import CityTemplate from '@/components/CityTemplate';
 
 const STORAGE_KEY = '@selected_cities';
+const backgroundImage = require('@/assets/images/background.jpg'); // Replace with your image path
+
 
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -61,32 +63,43 @@ export default function HomeScreen() {
   const dynamicLeft = width * 0.60;
 
   return (
-    <View style={styles.MainContainer}>
-      <ModalScreen visible={modalVisible} onClose={handleCloseModal} onCitySelect={handleCitySelect} />
+    <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
+      <View style={styles.MainContainer}>
+        <ModalScreen visible={modalVisible} onClose={handleCloseModal} onCitySelect={handleCitySelect} />
 
-      <View style={styles.Box}>
-        <View style={styles.HeadingContainer}>
-          <ThemedText resizeMode='contain' style={[styles.Heading, { fontSize: dynamicFontSize }]}>
-            Your Locations
-          </ThemedText>
-        </View>
-        <View style={styles.Table}>
-          {selectedCities.map((city, index) => (
-            <CityTemplate key={index} city={city} onRemove={handleRemoveCity} />
-          ))}
-        </View>
+        <View style={styles.Box}>
+          <View style={styles.HeadingContainer}>
+            <ThemedText resizeMode='contain' style={[styles.Heading, { fontSize: dynamicFontSize }]}>
+              Your Locations
+            </ThemedText>
 
-        <Pressable style={[styles.button, { left: dynamicLeft }]} onPress={handlePress}>
-          <ThemedText style={styles.button_text}>+</ThemedText>
-        </Pressable>
+          </View>
+          <Text style={styles.notice_text}>
+            Hint: Swipe entry right to remove from list.
+          </Text>
+          <View style={styles.Table}>
+            {selectedCities.map((city, index) => (
+              <CityTemplate key={index} city={city} onRemove={handleRemoveCity} />
+            ))}
+          </View>
+
+          <Pressable style={[styles.button, { left: dynamicLeft }]} onPress={handlePress}>
+            <ThemedText style={styles.button_text}>+</ThemedText>
+          </Pressable>
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+  },
   MainContainer: {
-    backgroundColor: '#221D34',
+    //backgroundColor: '#221D34',
     flex: 1,
     padding: 40,
   },
@@ -131,5 +144,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Arial',
     fontWeight: 'bold',
     color: 'white',
+  },
+  notice_text: { 
+    fontSize: 21,
+    fontFamily: 'Arial',
+    color: '#888',
+    backgroundColor: '#282434',
   },
 });

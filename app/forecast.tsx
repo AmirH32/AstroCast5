@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, SafeAreaView } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, ImageBackground } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -8,6 +8,8 @@ import Swiper from 'react-native-swiper';
 import { ProgressBar } from 'react-native-paper';
 import { heuristic_colour_hsl, LocationAPI, WeatherAPI, DayResult } from '@/scripts/locationWeatherApiInterface';
 import { Ionicons } from '@expo/vector-icons';
+
+const backgroundImage = require('@/assets/images/background2.jpg'); // Replace with your image path
 
 export default function HomeScreen() {
   const route = useRoute();
@@ -30,7 +32,7 @@ export default function HomeScreen() {
   }, [northing, easting]);
 
   return (
-
+    <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
     <SafeAreaView style={styles.container}>
     <StatusBar hidden />
     <View style={styles.navHeader}>
@@ -126,13 +128,19 @@ export default function HomeScreen() {
           </Animated.View>
         ))}
       </Animated.View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+  },
   container: {
     flex: 1,
-    backgroundColor: '#221D34',
+    //backgroundColor: '#221D34',
     justifyContent: 'center',
   },
   cardContainer: {
@@ -140,7 +148,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     flexGrow: 1,
     flexShrink: 1,
-    backgroundColor: '#492E60',
+    backgroundColor: '#492E60ee',
     borderRadius: 12,
     marginVertical: 2,
     shadowColor: "#000",

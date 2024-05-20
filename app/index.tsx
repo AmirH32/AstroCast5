@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   Table:{
-    flex:1
+    flex:1,
+    padding:10
   },
   button: {
     position: 'absolute',

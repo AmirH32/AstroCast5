@@ -35,7 +35,8 @@ export interface Location {
 }
 
 export function defaultLocation(): Location {
-    const location = new SearchResponse("Null", 0, 0);
+    // const location = new SearchResponse("Null", 0, 0);
+    const location = new SearchResponse("", 0, 0);
     return location;
 }
 

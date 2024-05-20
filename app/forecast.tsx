@@ -7,6 +7,7 @@ import Animated, { Layout, LinearTransition, useAnimatedRef } from 'react-native
 import Swiper from 'react-native-swiper';
 import { ProgressBar } from 'react-native-paper';
 import { heuristic_colour_hsl, LocationAPI, WeatherAPI, DayResult } from '@/scripts/locationWeatherApiInterface';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
   const route = useRoute();
@@ -29,18 +30,21 @@ export default function HomeScreen() {
   }, [northing, easting]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar hidden />
-      <View style={styles.header}>
-      <TouchableOpacity onPress={() => navigation.navigate('index')} style={styles.button}>
-          <Text style={styles.buttonText}>Back to Locations</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('scoreInfo')} style={styles.button}>
-          <Text style={styles.buttonText}>Score Info</Text>
-        </TouchableOpacity>
-      </View>
 
-      
+    <SafeAreaView style={styles.container}>
+    <StatusBar hidden />
+    <View style={styles.navHeader}>
+      <TouchableOpacity onPress={() => navigation.navigate('index')} style={styles.navButton}>
+        <Ionicons name="arrow-back" size={24} color="white" />
+        <Text style={styles.navButtonText}> Locations</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('scoreInfo')} style={styles.navButton}>
+        <Ionicons name="help-circle-outline" size={24} color="white" />
+        <Text style={styles.navButtonText}> Info</Text>
+      </TouchableOpacity>
+    </View>
+
+
       <Animated.View style={styles.container}>
         {data.map((dayResult, index) => (
           <Animated.View
@@ -206,4 +210,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
     width: '100%',
   },
+
+  navHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  navButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  navButtonText: {
+    color: 'white',
+  },
+  
 });

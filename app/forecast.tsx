@@ -65,8 +65,8 @@ export default function HomeScreen() {
                   >
                     <View style={styles.slide1}>
                       <View style={styles.suntimes}>
-                        <Text style={styles.text1}>Sunrise: {dayResult.suntimeMetric.getDisplayValue().split("-")[0]}</Text>
                         <Text style={styles.text1}>Sunset: {dayResult.suntimeMetric.getDisplayValue().split("-")[1]}</Text>
+                        <Text style={styles.text1}>Sunrise: {dayResult.suntimeMetric.getDisplayValue().split("-")[0]}</Text>
                       </View>
                     </View>
 

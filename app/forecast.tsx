@@ -38,7 +38,11 @@ export default function HomeScreen() {
         <Ionicons name="arrow-back" size={24} color="white" />
         <Text style={styles.navButtonText}> Locations</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('scoreInfo')} style={styles.navButton}>
+      {/* <TouchableOpacity onPress={() => navigation.navigate('scoreInfo')} style={styles.navButton}> */}
+      <TouchableOpacity onPress={() => navigation.navigate('scoreInfo', { locationName: locationName, northing: northing, easting: easting })} style={styles.navButton}>
+
+
+
         <Ionicons name="help-circle-outline" size={24} color="white" />
         <Text style={styles.navButtonText}> Info</Text>
       </TouchableOpacity>
@@ -138,7 +142,7 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     backgroundColor: '#492E60',
     borderRadius: 12,
-    marginVertical: 5,
+    marginVertical: 2,
     shadowColor: "#000",
     shadowOffset: {width: 0, height: 2, },
     shadowOpacity: 0.25,  

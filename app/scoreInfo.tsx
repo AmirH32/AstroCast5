@@ -3,19 +3,45 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 import { TouchableOpacity, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 
-//Colour Hex Codes: Purple - #56244A, Blue (Back arrows etc) #1A5974, Light Shade 1 (White) - #E8E9F3, 2?? CDE8F4
+import { useRoute, useNavigation } from '@react-navigation/native';
+
+
+//Colour Hex Codes: Purple - NO LONGER #56244A - NOW #221D34, Blue (Back arrows etc) #1A5974, Light Shade 1 (White) - #E8E9F3, 2?? CDE8F4
+
+// export default function HomeScreen() {
+//   const navigation = useNavigation();
+
+//   return (
+//     <ThemedView style={styles.Container}>
+//       {/* <View style={styles.navHeader}>
+//       <TouchableOpacity onPress={() => navigation.navigate('index')} style={styles.navButton}>
+//         <Ionicons name="arrow-back" size={24} color="white" />
+//         <Text style={styles.navButtonText}> Locations</Text>
+//       </TouchableOpacity>
+//     </View> */}
+
+//       {/* <TouchableOpacity onPress={() => navigation.navigate('forecast')} style={styles.navButton}>
+//           <Text style={styles.navButtonText}>Click the back arrow to return to the weekly overview </Text>
+//         </TouchableOpacity> */}
+//       <TouchableOpacity onPress={() => navigation.navigate('forecast')} style={styles.button}>
+//         <Ionicons name="arrow-back" size={24} color="white" />
+//         <Text style={styles.buttonText}> Weekly Overview</Text>
+//       </TouchableOpacity>
 
 export default function HomeScreen() {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { locationName, northing, easting } = route.params;
 
   return (
     <ThemedView style={styles.Container}>
-      <TouchableOpacity onPress={() => navigation.navigate('forecast')} style={styles.button}>
-          <Text style={styles.buttonText}>Click the back arrow to return to the weekly overview </Text>
-        </TouchableOpacity>
-    
+      <TouchableOpacity onPress={() => navigation.navigate('forecast', { locationName: locationName, northing: northing, easting: easting })} style={styles.button}>
+        {/* <Ionicons name="arrow-back" size={24} color="white" />
+        <Text style={styles.buttonText}> Weekly Overview</Text> */}
+      </TouchableOpacity>
+
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title" style={{color: "white" }}>Scoring Information</ThemedText>
 
@@ -51,8 +77,8 @@ const styles = StyleSheet.create({
   },
   Container: {
       flex: 1,
-      gap: 8,
-      marginBottom: 8,
+      // gap: 8,
+      // marginBottom: 8,
       padding: 10,
       backgroundColor: '#221D34'
   },
@@ -62,10 +88,22 @@ const styles = StyleSheet.create({
     flex:1
 },
   button: {
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 10,
   },
   buttonText: {
     color: 'white',
     fontSize: 18,
+    marginLeft: 5,
+  },
+  navButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#221D34',
+    color: 'white'
+  },
+  navButtonText: {
+    color: 'white',
   }
 });

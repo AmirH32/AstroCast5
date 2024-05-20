@@ -11,10 +11,10 @@ const Stack = createStackNavigator();
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Index" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="index" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" component={indexScreen} />
         <Stack.Screen name="forecast" component={forecastScreen} />
-        <Stack.Screen name="scoreInfo" component={infoScreen} />
+        <Stack.Screen name="scoreInfo" component={infoScreen} screenOptions={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

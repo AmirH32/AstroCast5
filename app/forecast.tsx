@@ -147,8 +147,6 @@ const styles = StyleSheet.create({
   },
   cardHeader: {
     width: '95%',
-    borderRadius: 10,
-    marginVertical: 10,
     paddingBottom: 25,
   },
   card: {
@@ -170,7 +168,7 @@ const styles = StyleSheet.create({
   slide2: {
     flexShrink: 1,
     backgroundColor: '#492E60',
-    padding: 10
+    padding: 1
   },
   slide1: {
     flexShrink: 1,
@@ -192,26 +190,24 @@ const styles = StyleSheet.create({
   headerRow: {
     flexDirection: 'row',
     backgroundColor: '#3E2054',
-    paddingVertical: 5,
-    marginBottom: 5,
+    paddingVertical: 2,
+    marginBottom: 2,
   },
   headerText: {
     color: '#F5F1ED',
-    fontSize: 12,
+    fontSize: 15,
     fontWeight: 'bold',
     textAlign: 'center',
     flex: 1,
   },
   row: {
     flexDirection: 'row',
-    paddingVertical: 3,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: '#180c20',
   },
   cell: {
     color: '#F5F1ED',
-    fontSize: 8,
-    fontWeight: 'bold',
+    fontSize: 13,
     textAlign: 'center',
     flex: 1,
   },

@@ -28,7 +28,7 @@ export default function HomeScreen() {
         </ThemedText>
 
         <ThemedText style={{color: '#E8E9F3'}}>The exact formula, using predetermined constants as well as live information, is as follows:</ThemedText>
-        <Image source={require('@/assets/images/equation1.png')} resizeMode = 'contain' style={{ width: "100%", alignSelf: 'center' }} />
+        <Image source={require('@/assets/images/equation.png')} resizeMode = 'contain' style={{ width: "100%", alignSelf: 'center' }} />
       </ThemedView>
 
     </ThemedView>

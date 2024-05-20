@@ -60,9 +60,14 @@ export default function HomeScreen() {
               activeOpacity={0.8}
             >
               <View style={styles.cardHeader}>
-                <Text style={styles.heading}>
-                  {dayResult.dayName} - {dayResult.dayDate}
-                </Text>
+              <View style={styles.dateContainer}>
+            <Text style={styles.heading}>
+              {dayResult.dayName}
+            </Text>
+            <Text style={styles.date}>
+              {dayResult.dayDate.split('/')[0] + '/' + dayResult.dayDate.split('/')[1]}
+            </Text>
+          </View>
                 <ProgressBar
                   progress={dayResult.averageHeuristic / 10}
                   color={heuristic_colour_hsl(dayResult.averageHeuristic, 1)}
@@ -132,8 +137,13 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     backgroundColor: '#492E60',
-    borderRadius: 10,
+    borderRadius: 12,
     marginVertical: 5,
+    shadowColor: "#000",
+    shadowOffset: {width: 0, height: 2, },
+    shadowOpacity: 0.25,  
+    shadowRadius: 4,
+    elevation: 5
   },
   cardHeader: {
     width: '95%',
@@ -224,5 +234,17 @@ const styles = StyleSheet.create({
   navButtonText: {
     color: 'white',
   },
+  
+  dateContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+
+  date: {
+    fontSize: 20,
+    fontWeight: '500',
+    color: 'white',
+  }
   
 });

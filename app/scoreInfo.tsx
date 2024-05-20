@@ -2,12 +2,20 @@ import { Image, StyleSheet } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
+import { TouchableOpacity, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 //Colour Hex Codes: Purple - #56244A, Blue (Back arrows etc) #1A5974, Light Shade 1 (White) - #E8E9F3, 2?? CDE8F4
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.Container}>
+export default function ScoreInfoScreen() {
+  const navigation = useNavigation();
 
+  return (
+    <ThemedView style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.navigate('forecast')} style={styles.button}>
+          <Text style={styles.buttonText}>Click the back arrow to return to the weekly overview </Text>
+        </TouchableOpacity>
+    
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title" style={{color: '#CDE8F4'}}>Scoring Information</ThemedText>
 
@@ -53,6 +61,12 @@ const styles = StyleSheet.create({
   Image: {
     alignSelf: 'center',
     flex:1
-}
-
+},
+  button: {
+    padding: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+  }
 });

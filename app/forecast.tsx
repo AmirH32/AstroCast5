@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text, SafeAreaView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, { Layout, LinearTransition, useAnimatedRef } from 'react-native-reanimated';
 import Swiper from 'react-native-swiper';
@@ -10,6 +10,7 @@ import { heuristic_colour_hsl, LocationAPI, WeatherAPI, DayResult } from '@/scri
 
 export default function HomeScreen() {
   const route = useRoute();
+  const navigation = useNavigation();
   const { locationName, northing, easting } = route.params;
   const [data, setData] = useState<DayResult[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
@@ -30,6 +31,16 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar hidden />
+      <View style={styles.header}>
+      <TouchableOpacity onPress={() => navigation.navigate('index')} style={styles.button}>
+          <Text style={styles.buttonText}>Back to Locations</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('scoreInfo')} style={styles.button}>
+          <Text style={styles.buttonText}>Score Info</Text>
+        </TouchableOpacity>
+      </View>
+
+      
       <Animated.View style={styles.container}>
         {data.map((dayResult, index) => (
           <Animated.View
@@ -105,7 +116,6 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

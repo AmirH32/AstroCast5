@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Dimensions } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
@@ -27,7 +27,6 @@ export default function HomeScreen() {
     </ThemedView>
   );
 }
-const {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',

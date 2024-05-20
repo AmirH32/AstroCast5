@@ -40,7 +40,7 @@ export default function HomeScreen() {
      
     <View style={styles.Box}>
       <View style={styles.HeadingContainer}>
-        <ThemedText style={[styles.Heading, {fontSize: dynamicFontSize}]}>
+      <ThemedText resizeMode = 'contain' style={styles.Heading, {fontSize: dynamicFontSize}}>
           Your Locations
         </ThemedText>
       </View>

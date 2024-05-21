@@ -45,12 +45,14 @@ class RandomDayQuery {
 class RandomHourQuery {
     queryHour(easting, northing, hoursAfterMidnight, day) {
         const noise = this.noise(hoursAfterMidnight / 8 + day * 3, easting + northing);
-        const noise2 = this.noise(hoursAfterMidnight + day * 24, easting + northing) - 0.5;
+        const noise2 = this.noise(hoursAfterMidnight / 8 + day * 3, easting + northing + 100);
+        const noise3 = this.noise(hoursAfterMidnight + day * 24, easting + northing) - 0.5;
         const seed = Math.round(1 + 9 * noise);
+        const seed2 = Math.round(1 + 9 * noise2);
         return new HourQueryResult(
             new RandomCloudCoverMetric(seed),
-            new RandomPrecipitationMetric(seed),
-            new RandomTemperatureMetric(Math.max(1, Math.round(10 * Math.pow(Math.sin(hoursAfterMidnight / 8 + 0.5 * noise2), 2)))),
+            new RandomPrecipitationMetric(Math.round((seed + seed2) / 2)),
+            new RandomTemperatureMetric(Math.max(1, Math.round(10 * Math.pow(Math.sin(hoursAfterMidnight / 8 + 0.5 * noise3), 2)))),
             new RandomMoonAltitudeMetric(11 - seed)
         );
     }

@@ -151,5 +151,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Arial',
     color: '#888',
     backgroundColor: '#282434',
+    paddingLeft: 10,
   },
 });

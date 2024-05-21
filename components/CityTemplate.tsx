@@ -63,7 +63,7 @@ class CityTemplate extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f9fcff',
+    backgroundColor: '#EEF2FF',
     padding: 10,
     marginVertical: 10,
     borderRadius: 15,

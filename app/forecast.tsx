@@ -14,10 +14,17 @@ const backgroundImage = require('@/assets/images/background2.jpg'); // Replace w
 export default function HomeScreen() {
   const route = useRoute();
   const navigation = useNavigation();
-  const { locationName, northing, easting } = route.params;
+  const { city, northing, easting } = route.params;
+
   const [data, setData] = useState<DayResult[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const ref = useAnimatedRef();
+
+  useEffect(() => {
+    // Set the current index based on the day of the week
+    setCurrentIndex(((new Date().getDay() - 1) % 7 + 7) % 7);
+  }, []);
+
 
   useEffect(() => {
     async function fetchData() {
@@ -29,7 +36,7 @@ export default function HomeScreen() {
       }
     }
     fetchData();
-  }, [northing, easting]);
+  }, [city, northing, easting]);
 
   return (
     <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
@@ -41,14 +48,17 @@ export default function HomeScreen() {
         <Text style={styles.navButtonText}> Locations</Text>
       </TouchableOpacity>
       {/* <TouchableOpacity onPress={() => navigation.navigate('scoreInfo')} style={styles.navButton}> */}
-      <TouchableOpacity onPress={() => navigation.navigate('scoreInfo', { locationName: locationName, northing: northing, easting: easting })} style={styles.navButton}>
+      <TouchableOpacity onPress={() => navigation.navigate('scoreInfo', { city: city, northing: northing, easting: easting })} style={styles.navButton}>
 
 
 
         <Ionicons name="help-circle-outline" size={24} color="white" />
         <Text style={styles.navButtonText}> Info</Text>
       </TouchableOpacity>
-    </View>
+        </View>
+        <Text style={[styles.title, { alignSelf: 'center' }]}>
+          Stargazing at {city.split(' - ')[0]}
+        </Text>
 
 
       <Animated.View style={styles.container}>
@@ -91,8 +101,15 @@ export default function HomeScreen() {
                   >
                     <View style={styles.slide1}>
                       <View style={styles.suntimes}>
-                        <Text style={styles.text1}>Sunset: {dayResult.suntimeMetric.getDisplayValue().split("-")[1]}</Text>
-                        <Text style={styles.text1}>Sunrise: {dayResult.suntimeMetric.getDisplayValue().split("-")[0]}</Text>
+                        <Text style={styles.text1}>
+                          Overall goodness for stargazing - {Math.round(dayResult.averageHeuristic * 10)}%<br /><br />
+                          Sunrise - {dayResult.suntimeMetric.getDisplayValue().split("-")[0]}<br /><br />
+                          Sunset  - {dayResult.suntimeMetric.getDisplayValue().split("-")[1]}<br /><br />
+                          Moon Phase - {dayResult.moonPhaseMetric.getDisplayValue()}<br /><br />
+                        </Text>
+                        <Text style={styles.notice_text}>
+                          Swipe right for more information.
+                        </Text>
                       </View>
                     </View>
 
@@ -166,8 +183,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  title: {
+    fontSize: 26,
+    fontWeight: '800',
+    letterSpacing: -0.5,
+    color: '#F5F1ED',
+  },
   heading: {
-    fontSize: 25,
+    fontSize: 23,
     fontWeight: '800',
     textTransform: 'uppercase',
     letterSpacing: -1,
@@ -179,18 +202,18 @@ const styles = StyleSheet.create({
   },
   slide2: {
     flexShrink: 1,
-    backgroundColor: '#492E60',
+    backgroundColor: '#492E6022',
     padding: 1
   },
   slide1: {
     flexShrink: 1,
     justifyContent: 'center',
-    backgroundColor: '#492E60',
+    backgroundColor: '#492E6022',
     padding: 10,
     marginLeft: '2.5%',
   },
   suntimes: {
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   text1: {
     color: '#F5F1ED',
@@ -253,6 +276,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     color: 'white',
-  }
-  
+  },
+    notice_text: {
+    fontSize: 16,
+    fontFamily: 'Arial',
+      color: '#888a',
+
+  },
 });

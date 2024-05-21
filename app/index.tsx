@@ -7,8 +7,7 @@ import ModalScreen from '@/components/Modal';
 import CityTemplate from '@/components/CityTemplate';
 
 const STORAGE_KEY = '@selected_cities';
-const backgroundImage = require('@/assets/images/background.jpg'); // Replace with your image path
-
+const backgroundImage = require('@/assets/images/background.jpg'); 
 
 export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -110,7 +109,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   HeadingContainer: {
-    backgroundColor: '#1A5974',
+    // backgroundColor: '#1A5974',
+    backgroundColor: '#02114A',
     height: '20%',
     width: '100%',
     borderTopRightRadius: 20,
@@ -134,7 +134,8 @@ const styles = StyleSheet.create({
     padding: 20,
     width: 60,
     height: 60,
-    backgroundColor: '#1A5974',
+    // backgroundColor: '#1A5974',
+    backgroundColor: '#02114A',
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',

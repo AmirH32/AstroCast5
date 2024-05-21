@@ -83,7 +83,7 @@ export default function HomeScreen() {
             <Text style={styles.date}>
               {dayResult.dayDate.split('/')[0] + '/' + dayResult.dayDate.split('/')[1]}
             </Text>
-          </View>
+              </View>
                 <ProgressBar
                   progress={dayResult.averageHeuristic / 10}
                   color={heuristic_colour_hsl(dayResult.averageHeuristic, 1)}
@@ -94,7 +94,7 @@ export default function HomeScreen() {
                 <View style={{ flexShrink: 1, width: '100%' }}>
                   <Swiper
                     style={styles.slideWrapper}
-                    showsButtons={true}
+                    showsButtons={false}
                     loop={false}
                     showsPagination={true}
                     horizontal={true}

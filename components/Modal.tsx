@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   selectButton: {
-    backgroundColor: 'blue',
+    backgroundColor: 'green',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,

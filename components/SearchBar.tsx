@@ -97,7 +97,7 @@ const SearchBar = ({ onCitySelect }) => {
       <View style={styles.container}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Search..."
+          placeholder="Input Location: "
           value={searchText}
           onChangeText={handleSearchTextChange}
         /> 

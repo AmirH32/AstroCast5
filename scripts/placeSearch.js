@@ -8,11 +8,11 @@ function sigmoid(x) {
 // this makes a lot of sense, but in the API implementation i have, the metrics are simply mapped to heuristic: 
 // see below... getGoodnessHeuristic() methods.
 export function heuristic (rainfall_mm, cloud_cover_percent, temperature_celsius) {
-      const rain_c = 10.0;
-      const cloud_c = 10.0;
-      const temp_c = 1.0;
-      return 1 - (sigmoid(rain_c * Math.pow(rainfall_mm, 2) +
-      cloud_c * Math.pow(cloud_cover_percent, 3) +
+      const rain_c = 16.0;
+      const cloud_c = 24.0;
+      const temp_c = 0.1;
+      return 1 - (sigmoid(10 + rain_c * Math.pow(rainfall_mm, 3) +
+      cloud_c * Math.pow(cloud_cover_percent, 4) +
       temp_c * Math.abs(15 - temperature_celsius)))
   }
   
